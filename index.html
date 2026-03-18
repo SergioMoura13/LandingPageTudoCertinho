@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tudo Certinho | Método de Organização Pessoal</title>
+  <meta
+    name="description"
+    content="Organize sua vida, metas e finanças em um só sistema dentro do Notion com o Tudo Certinho."
+  />
+  <style>
+    :root {
+      --bg: #060606;
+      --bg-soft: rgba(255, 255, 255, 0.04);
+      --bg-card: rgba(255, 255, 255, 0.05);
+      --border: rgba(255, 255, 255, 0.10);
+      --text: #ffffff;
+      --muted: rgba(255, 255, 255, 0.72);
+      --muted-2: rgba(255, 255, 255, 0.55);
+      --gold: #f6c453;
+      --orange: #f97316;
+      --yellow: #fde68a;
+      --shadow: 0 20px 80px rgba(0,0,0,0.35);
+      --radius: 24px;
+      --radius-sm: 18px;
+      --max: 1200px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(251,191,36,0.16), transparent 20%),
+        radial-gradient(circle at top right, rgba(249,115,22,0.12), transparent 22%),
+        radial-gradient(circle at bottom, rgba(251,191,36,0.08), transparent 24%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: min(100% - 32px, var(--max));
+      margin: 0 auto;
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid rgba(246, 196, 83, 0.18);
+      background: rgba(246, 196, 83, 0.10);
+      color: #f8d98a;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 15px 26px;
+      border-radius: 18px;
+      font-weight: 700;
+      transition: 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, var(--gold), var(--orange), var(--yellow));
+      color: #111;
+      box-shadow: 0 0 35px rgba(249,115,22,0.28);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.65);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      min-height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--gold), var(--orange), var(--yellow));
+      box-shadow: 0 0 40px rgba(251,191,36,0.25);
+      flex-shrink: 0;
+    }
+
+    .brand-text strong {
+      display: block;
+      font-size: 18px;
+    }
+
+    .brand-text span {
+      color: var(--muted-2);
+      font-size: 12px;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .nav a:hover {
+      color: #fff;
+    }
+
+    .hero {
+      padding: 64px 0 56px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(38px, 7vw, 68px);
+      line-height: 1.02;
+      font-weight: 900;
+      letter-spacing: -1.5px;
+      margin-top: 18px;
+    }
+
+    .hero .highlight-1 { color: var(--gold); }
+    .hero .highlight-2 { color: var(--orange); }
+
+    .hero p {
+      margin-top: 20px;
+      max-width: 650px;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      margin-top: 30px;
+      flex-wrap: wrap;
+    }
+
+    .hero-proof {
+      margin-top: 28px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .proof-item {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .hero-image-wrap {
+      position: relative;
+    }
+
+    .hero-image-glow {
+      position: absolute;
+      inset: -18px;
+      border-radius: 34px;
+      background: linear-gradient(135deg, rgba(246,196,83,0.18), rgba(249,115,22,0.10), transparent);
+      filter: blur(34px);
+    }
+
+    .hero-image {
+      position: relative;
+      border: 1px solid rgba(246, 196, 83, 0.10);
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border-radius: 30px;
+      padding: 12px;
+      box-shadow: 0 30px 120px rgba(0,0,0,0.55);
+    }
+
+    .hero-image img {
+      border-radius: 22px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .mini-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .mini-card h3 {
+      color: var(--gold);
+      margin-bottom: 10px;
+      font-size: 24px;
+    }
+
+    .mini-card p {
+      color: var(--muted);
+    }
+
+    .section-head {
+      text-align: center;
+      margin-bottom: 42px;
+    }
+
+    .eyebrow {
+      color: #f7b35f;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 700;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .section-head h2 {
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.1;
+      font-weight: 900;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .section-head p {
+      max-width: 760px;
+      margin: 18px auto 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .modules-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .module-card {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 26px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .module-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.75;
+      pointer-events: none;
+      background: linear-gradient(135deg, rgba(246,196,83,0.14), rgba(249,115,22,0.08), transparent);
+    }
+
+    .module-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .module-card h3 {
+      font-size: 34px;
+      margin-bottom: 12px;
+    }
+
+    .module-card p {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .check-list {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .check-dot {
+      width: 10px;
+      height: 10px;
+      margin-top: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--gold), var(--orange));
+      flex-shrink: 0;
+    }
+
+    .module-shot {
+      border: 1px solid var(--border);
+      background: rgba(0,0,0,0.25);
+      border-radius: 22px;
+      padding: 10px;
+    }
+
+    .module-shot img {
+      border-radius: 14px;
+      width: 100%;
+    }
+
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .benefit-boxes {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .benefit-pill {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      padding: 14px 16px;
+      border-radius: 18px;
+      color: rgba(255,255,255,0.82);
+    }
+
+    .image-card {
+      position: relative;
+    }
+
+    .image-card::before {
+      content: "";
+      position: absolute;
+      inset: -12px;
+      border-radius: 34px;
+      background: linear-gradient(135deg, rgba(246,196,83,0.15), rgba(249,115,22,0.08));
+      filter: blur(30px);
+      z-index: 0;
+    }
+
+    .image-card .inner {
+      position: relative;
+      z-index: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 12px;
+      border-radius: 28px;
+      box-shadow: 0 20px 90px rgba(0,0,0,0.45);
+    }
+
+    .image-card img {
+      border-radius: 18px;
+      width: 100%;
+    }
+
+    .includes-wrap,
+    .offer-wrap,
+    .cta-wrap {
+      background: linear-gradient(180deg, rgba(255,173,65,0.08), rgba(255,255,255,0.03));
+      border: 1px solid rgba(246,196,83,0.10);
+      border-radius: 30px;
+      box-shadow: 0 25px 90px rgba(0,0,0,0.35);
+    }
+
+    .includes-wrap {
+      padding: 32px;
+    }
+
+    .includes-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .include-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+    }
+
+    .include-item {
+      background: rgba(0,0,0,0.20);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      color: rgba(255,255,255,0.84);
+    }
+
+    .offer-wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 34px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .offer-wrap::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(251,191,36,0.12), transparent 30%);
+      pointer-events: none;
+    }
+
+    .offer-wrap > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .offer-card {
+      margin-top: 28px;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 28px;
+    }
+
+    .old-price {
+      color: rgba(255,255,255,0.45);
+      text-decoration: line-through;
+      margin-bottom: 6px;
+    }
+
+    .price {
+      font-size: clamp(46px, 8vw, 86px);
+      color: var(--gold);
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .price-note {
+      margin-top: 8px;
+      color: var(--muted);
+    }
+
+    .offer-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      text-align: left;
+      max-width: 760px;
+      margin: 28px auto 0;
+    }
+
+    .offer-list div {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 14px 16px;
+      color: rgba(255,255,255,0.86);
+    }
+
+    .offer-card .btn {
+      margin-top: 26px;
+      min-width: 320px;
+    }
+
+    .small-note {
+      margin-top: 12px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 14px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .faq-item {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 22px 22px;
+      background: transparent;
+      color: #fff;
+      border: none;
+      text-align: left;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+    }
+
+    .faq-answer p {
+      padding: 0 22px 22px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .faq-item.active .faq-answer {
+      max-height: 240px;
+    }
+
+    .cta-wrap {
+      padding: 36px 28px;
+      text-align: center;
+    }
+
+    .cta-wrap h2 {
+      font-size: clamp(30px, 5vw, 52px);
+      line-height: 1.1;
+      font-weight: 900;
+    }
+
+    .cta-wrap p {
+      max-width: 760px;
+      margin: 16px auto 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.8;
+    }
+
+    .cta-wrap .btn {
+      margin-top: 28px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .benefits-grid,
+      .includes-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .modules-grid,
+      .mini-grid,
+      .hero-proof,
+      .offer-list,
+      .include-list {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .nav {
+        display: none;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .section {
+        padding: 58px 0;
+      }
+
+      .hero {
+        padding: 42px 0 24px;
+      }
+
+      .hero-grid,
+      .modules-grid,
+      .mini-grid,
+      .hero-proof,
+      .offer-list,
+      .include-list,
+      .benefit-boxes {
+        grid-template-columns: 1fr;
+      }
+
+      .topbar-inner {
+        min-height: 68px;
+      }
+
+      .brand-text strong {
+        font-size: 16px;
+      }
+
+      .brand-text span {
+        font-size: 11px;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .offer-card .btn {
+        min-width: 100%;
+      }
+
+      .module-card h3 {
+        font-size: 28px;
+      }
+
+      .includes-wrap,
+      .offer-wrap,
+      .cta-wrap {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <div class="brand">
+        <img src="logo.png" class="brand-icon" alt="#">
+        <div class="brand-text">
+          <strong>Tudo Certinho</strong>
+          <span>Método de Organização Pessoal</span>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="#modulos">Módulos</a>
+        <a href="#beneficios">Benefícios</a>
+        <a href="#oferta">Oferta</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+
+      <a href="https://pay.kiwify.com.br/2qmzZYS" class="btn btn-primary" style="padding: 12px 18px; font-size: 14px;">Quero acesso</a>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="badge">Acesso imediato • Garantia de 7 dias</span>
+
+        <h1>
+          Organize sua vida, suas <span class="highlight-1">metas</span> e seu
+          <span class="highlight-2">dinheiro</span> em um só lugar.
+        </h1>
+
+        <p>
+          O <strong>Tudo Certinho</strong> transforma o Notion em um sistema premium
+          para organizar rotina, finanças, hábitos e objetivos com mais clareza,
+          foco e controle.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#oferta" class="btn btn-primary">Quero organizar minha vida agora</a>
+          <a href="#modulos" class="btn btn-secondary">Ver o sistema</a>
+        </div>
+
+        <div class="hero-proof">
+          <div class="proof-item">✔ Acesso imediato</div>
+          <div class="proof-item">✔ Visual premium</div>
+          <div class="proof-item">✔ Uso simples</div>
+        </div>
+      </div>
+
+      <div class="hero-image-wrap">
+        <div class="hero-image-glow"></div>
+        <div class="hero-image">
+          <img src="home.png" alt="Preview principal do sistema Tudo Certinho">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container mini-grid">
+      <div class="mini-card">
+        <h3>Menos bagunça</h3>
+        <p>Centralize sua vida pessoal, financeira e profissional em um só sistema.</p>
+      </div>
+      <div class="mini-card">
+        <h3>Mais clareza</h3>
+        <p>Saiba no que focar, o que precisa ser feito e como evoluir de forma simples.</p>
+      </div>
+      <div class="mini-card">
+        <h3>Mais controle</h3>
+        <p>Acompanhe metas, hábitos, tarefas e dinheiro sem depender de vários apps.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="modulos">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Tudo o que você precisa</span>
+        <h2>Um sistema completo para uma vida mais organizada</h2>
+        <p>
+          Estrutura pensada para quem quer sair da desorganização e começar a viver
+          com mais foco, controle e consistência.
+        </p>
+      </div>
+
+      <div class="modules-grid">
+        <article class="module-card">
+          <h3>Minhas Metas</h3>
+          <p>Defina metas claras e acompanhe sua evolução com visão de curto e longo prazo.</p>
+          <div class="check-list">
+            <div class="check-item"><span class="check-dot"></span><span>Clareza nas prioridades</span></div>
+            <div class="check-item"><span class="check-dot"></span><span>Acompanhamento visual</span></div>
+            <div class="check-item"><span class="check-dot"></span><span>Mais direção no dia a dia</span></div>
+          </div>
+          <div class="module-shot">
+            <img src="minhasmetas.png" alt="Módulo de metas">
+          </div>
+        </article>
+
+        <article class="module-card">
+          <h3>Hábitos Diários</h3>
+          <p>Construa disciplina com acompanhamento simples do seu progresso diário, semanal e mensal.</p>
+          <div class="check-list">
+            <div class="check-item"><span class="check-dot"></span><span>Controle de hábitos</span></div>
+            <div class="check-item"><span class="check-dot"></span><span>Progresso automático</span></div>
+            <div class="check-item"><span class="check-dot"></span><span>Motivação visual</span></div>
+          </div>
+          <div class="module-shot">
+            <img src="habitos.png" alt="Módulo de hábitos">
+          </div>
+        </article>
+
+        <article class="module-card">
+          <h3>Agenda Inteligente</h3>
+          <p>Nunca mais perca tarefas, compromissos e prioridades importantes da sua rotina.</p>
+          <div class="check-list">
+            <div class="check-item"><span class="check-dot"></span><span>Tarefas e compromissos</span></div>
+            <div class="check-item"><span class="check-dot"></span><span>Fluxo simples</span></div>
+            <div class="check-item"><span class="check-dot"></span><span>Organização prática</span></div>
+          </div>
+          <div class="module-shot">
+            <img src="agenda.png" alt="Módulo de agenda">
+          </div>
+        </article>
+
+        <article class="module-card">
+          <h3>Painel Financeiro</h3>
+          <p>Controle entradas, saídas e investimentos em um painel visual, simples e direto.</p>
+          <div class="check-list">
+            <div class="check-item"><span class="check-dot"></span><span>Entradas e saídas</span></div>
+            <div class="check-item"><span class="check-dot"></span><span>Investimentos</span></div>
+            <div class="check-item"><span class="check-dot"></span><span>Visão patrimonial</span></div>
+          </div>
+          <div class="module-shot">
+            <img src="financeiro.png" alt="Módulo financeiro">
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="beneficios">
+    <div class="container benefits-grid">
+      <div>
+        <span class="eyebrow">Por que usar o Tudo Certinho</span>
+        <h2 style="text-align:left; margin:0;">Um sistema simples, bonito e feito para funcionar todos os dias.</h2>
+        <p style="margin-top:18px; color:var(--muted); font-size:18px; line-height:1.8;">
+          Em vez de depender de vários aplicativos, você passa a ter um ambiente único
+          para acompanhar sua evolução e manter sua vida em ordem com menos esforço.
+        </p>
+
+        <div class="benefit-boxes">
+          <div class="benefit-pill">✔ Tudo centralizado em um único sistema</div>
+          <div class="benefit-pill">✔ Funciona no celular, tablet e computador</div>
+          <div class="benefit-pill">✔ Visual premium e fácil de usar</div>
+          <div class="benefit-pill">✔ Mais clareza na rotina e nas metas</div>
+          <div class="benefit-pill">✔ Mais controle do seu dinheiro</div>
+          <div class="benefit-pill">✔ Menos bagunça e mais consistência</div>
+        </div>
+      </div>
+
+      <div class="image-card">
+        <div class="inner">
+          <img src="profissional.png" alt="Área profissional do sistema">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="includes-wrap">
+        <div class="includes-grid">
+          <div>
+            <span class="eyebrow">O que está incluso</span>
+            <h2 style="text-align:left; margin:0;">Você recebe um sistema completo para começar hoje mesmo</h2>
+            <p style="margin-top:18px; color:var(--muted); font-size:18px; line-height:1.8;">
+              Tudo pronto para duplicar no Notion, personalizar com seus dados e usar no seu ritmo.
+            </p>
+          </div>
+
+          <div class="include-list">
+            <div class="include-item">✔ Dashboard principal pronto para uso</div>
+            <div class="include-item">✔ Área de metas e objetivos</div>
+            <div class="include-item">✔ Área de hábitos diários</div>
+            <div class="include-item">✔ Agenda com tarefas e compromissos</div>
+            <div class="include-item">✔ Painel financeiro completo</div>
+            <div class="include-item">✔ Balanço mensal e visão patrimonial</div>
+            <div class="include-item">✔ Área profissional para projetos</div>
+            <div class="include-item">✔ Acesso imediato após a compra</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="oferta">
+    <div class="container">
+      <div class="offer-wrap">
+        <span class="badge">Acesso imediato + garantia de 7 dias</span>
+
+        <div class="section-head" style="margin: 22px 0 0;">
+          <h2>Organize sua vida com um sistema premium dentro do Notion</h2>
+          <p>
+            Pare de se sentir perdido e comece a ter clareza sobre sua rotina,
+            suas metas e seu dinheiro.
+          </p>
+        </div>
+
+        <div class="offer-card">
+          <div class="old-price">De R$ 97,00</div>
+          <div class="price">R$ 39,90</div>
+          <div class="price-note">acesso vitalício</div>
+
+          <div class="offer-list">
+            <div>✔ Dashboard principal</div>
+            <div>✔ Metas, hábitos e agenda</div>
+            <div>✔ Financeiro e visão mensal</div>
+            <div>✔ Área profissional</div>
+            <div>✔ Acesso imediato</div>
+            <div>✔ Garantia de 7 dias</div>
+          </div>
+
+          <a id="checkout-btn" href="#" class="btn btn-primary">Quero acessar agora</a>
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Dúvidas frequentes</span>
+        <h2>FAQ</h2>
+      </div>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">Preciso saber mexer no Notion?</button>
+          <div class="faq-answer">
+            <p>Não. O sistema já vai pronto para uso. Você só precisa duplicar e começar a personalizar com seus dados.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Funciona no celular?</button>
+          <div class="faq-answer">
+            <p>Sim. Você pode usar no celular, tablet e computador.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">O acesso é imediato?</button>
+          <div class="faq-answer">
+            <p>Sim. Após a confirmação do pagamento, você recebe o acesso imediatamente.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">Tem garantia?</button>
+          <div class="faq-answer">
+            <p>Sim. Você pode trabalhar com garantia de 7 dias para reduzir objeção e aumentar a conversão.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="container">
+      <div class="cta-wrap">
+        <h2>Tudo o que você precisa para colocar sua vida em ordem.</h2>
+        <p>
+          Menos confusão, mais clareza e mais controle. Tudo dentro de um sistema bonito,
+          prático e feito para usar no dia a dia.
+        </p>
+        <a href="#oferta" class="btn btn-primary">Quero meu acesso agora</a>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach((item) => {
+      const btn = item.querySelector('.faq-question');
+      btn.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+
+        faqItems.forEach((faq) => faq.classList.remove('active'));
+        if (!isActive) item.classList.add('active');
+      });
+    });
+
+    // TROQUE AQUI PELO SEU LINK DE CHECKOUT
+    const checkoutLink = 'https://pay.kiwify.com.br/2qmzZYS';
+    document.getElementById('checkout-btn').setAttribute('href', checkoutLink);
+  </script>
+</body>
+</html>
